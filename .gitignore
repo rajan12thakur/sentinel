@@ -50,3 +50,14 @@ htmlcov/
 dist/
 build/
 *.egg-info/
+
+# ML datasets
+data/raw/
+data/external/
+
+# Generated ML outputs
+data/processed/
+
+# Experiment artifacts
+ml/experiments/*/artifacts/
+mlruns/
