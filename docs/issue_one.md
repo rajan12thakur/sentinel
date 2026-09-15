@@ -37,17 +37,29 @@ Business objective
 Convert historical machine sensor data into actionable predictions:
 
 Sensor Data
-    ↓
+
+    ↓
+
 Data Processing
-    ↓
+
+    ↓
+
 Feature Engineering
-    ↓
+
+    ↓
+
 ML / Deep Learning
-    ↓
+
+    ↓
+
 Failure Risk + RUL
-    ↓
+
+    ↓
+
 API
-    ↓
+
+    ↓
+
 Dashboard / Applications
 
 Functional requirements
@@ -67,9 +79,13 @@ Estimate failure probability/risk.
 Example:
 
 {
-  "machine_id": "FD001_001",
-  "risk_level": "HIGH",
-  "failure_probability": 0.87
+
+  "machine_id": "FD001_001",
+
+  "risk_level": "HIGH",
+
+  "failure_probability": 0.87
+
 }
 
 The actual thresholds should be justified by experiments/business assumptions.
@@ -79,8 +95,11 @@ FR-04 — RUL prediction
 Estimate remaining useful life.
 
 {
-  "machine_id": "FD001_001",
-  "predicted_rul": 24
+
+  "machine_id": "FD001_001",
+
+  "predicted_rul": 24
+
 }
 
 FR-05 — Explainability
@@ -240,7 +259,9 @@ For preprocessing and classical ML baselines.
 Potential models:
 
 Logistic Regression
+
 Random Forest
+
 XGBoost
 
 PyTorch
@@ -250,11 +271,17 @@ For custom deep-learning and sequence models.
 Potential progression:
 
 MLP
- ↓
+
+ ↓
+
 1D CNN
- ↓
+
+ ↓
+
 LSTM
- ↓
+
+ ↓
+
 Transformer Encoder (later)
 
 MLflow
@@ -396,9 +423,13 @@ Stage 5 — Classical ML baseline
 Suggested:
 
 Logistic Regression
-        ↓
+
+        ↓
+
 Random Forest
-        ↓
+
+        ↓
+
 XGBoost
 
 The baseline establishes a reference point for deep learning.
@@ -455,16 +486,22 @@ Stage 9 — Multi-task learning (later)
 
 Potential architecture:
 
-             Shared Encoder
-                   │
-          ┌────────┴────────┐
-          ↓                 ↓
- Failure Head           RUL Head
-Classification          Regression
+             Shared Encoder
+
+                   │
+
+          ┌────────┴────────┐
+
+          ↓                 ↓
+
+ Failure Head           RUL Head
+
+Classification          Regression
 
 Possible objective:
 
 Total Loss =
+
 classification loss + λ × regression loss
 
 Choose λ experimentally.
@@ -476,13 +513,21 @@ Never fabricate metrics.
 Correct workflow:
 
 Train
-  ↓
+
+  ↓
+
 Evaluate
-  ↓
+
+  ↓
+
 Compare
-  ↓
+
+  ↓
+
 Analyze errors
-  ↓
+
+  ↓
+
 Select model based on evidence
 
 If XGBoost performs better than LSTM, keep XGBoost and explain why.
@@ -513,62 +558,112 @@ Why did the model predict high failure risk?
 
 12. Proposed Architecture
 
-                    ┌─────────────────────┐
-                    │   Sensor Dataset    │
-                    └──────────┬──────────┘
-                               ↓
-                    ┌─────────────────────┐
-                    │ Validation &        │
-                    │ Preprocessing       │
-                    └──────────┬──────────┘
-                               ↓
-                    ┌─────────────────────┐
-                    │ Feature Engineering │
-                    └──────────┬──────────┘
-                               ↓
-             ┌─────────────────┴─────────────────┐
-             ↓                                   ↓
-    ┌──────────────────┐                ┌──────────────────┐
-    │ Classical ML     │                │ Deep Learning    │
-    │ Baselines        │                │ Models           │
-    └────────┬─────────┘                └────────┬─────────┘
-             └────────────────┬──────────────────┘
-                              ↓
-                    ┌─────────────────────┐
-                    │ Evaluation &        │
-                    │ Error Analysis      │
-                    └──────────┬──────────┘
-                               ↓
-                    ┌─────────────────────┐
-                    │ Selected Model      │
-                    └──────────┬──────────┘
-                               ↓
-                    ┌─────────────────────┐
-                    │ Django / DRF        │
-                    │ Inference API       │
-                    └──────────┬──────────┘
-                               ↓
-                    ┌──────────┴──────────┐
-                    ↓                     ↓
-             ┌──────────────┐     ┌──────────────┐
-             │ PostgreSQL   │     │ Dashboard    │
-             └──────────────┘     └──────────────┘
+                    ┌─────────────────────┐
+
+                    │   Sensor Dataset    │
+
+                    └──────────┬──────────┘
+
+                               ↓
+
+                    ┌─────────────────────┐
+
+                    │ Validation &        │
+
+                    │ Preprocessing       │
+
+                    └──────────┬──────────┘
+
+                               ↓
+
+                    ┌─────────────────────┐
+
+                    │ Feature Engineering │
+
+                    └──────────┬──────────┘
+
+                               ↓
+
+             ┌─────────────────┴─────────────────┐
+
+             ↓                                   ↓
+
+    ┌──────────────────┐                ┌──────────────────┐
+
+    │ Classical ML     │                │ Deep Learning    │
+
+    │ Baselines        │                │ Models           │
+
+    └────────┬─────────┘                └────────┬─────────┘
+
+             └────────────────┬──────────────────┘
+
+                              ↓
+
+                    ┌─────────────────────┐
+
+                    │ Evaluation &        │
+
+                    │ Error Analysis      │
+
+                    └──────────┬──────────┘
+
+                               ↓
+
+                    ┌─────────────────────┐
+
+                    │ Selected Model      │
+
+                    └──────────┬──────────┘
+
+                               ↓
+
+                    ┌─────────────────────┐
+
+                    │ Django / DRF        │
+
+                    │ Inference API       │
+
+                    └──────────┬──────────┘
+
+                               ↓
+
+                    ┌──────────┴──────────┐
+
+                    ↓                     ↓
+
+             ┌──────────────┐     ┌──────────────┐
+
+             │ PostgreSQL   │     │ Dashboard    │
+
+             └──────────────┘     └──────────────┘
 
 13. Repository Architecture
 
 Current intended structure:
 
 sentinel/
+
 ├── config/
+
 ├── core/
+
 ├── dashboard/
+
 ├── machines/
+
 ├── predictions/
+
 ├── ml_models/
+
 ├── .env.example
+
 ├── .gitignore
+
 ├── docker-compose.yml
+
 ├── manage.py
+
 └── requirements.txt
 
 We intentionally changed from multiple requirements files to one:
@@ -582,28 +677,43 @@ Do not create empty modules just for appearance. Introduce functionality through
 Current requirements:
 
 Django
+
 djangorestframework
+
 psycopg[binary]
+
 python-dotenv
+
 pytest
+
 pytest-django
 
 As ML work starts, add only what is actually needed, potentially:
 
 numpy
+
 pandas
+
 scikit-learn
+
 matplotlib
+
 seaborn
+
 jupyter
+
 torch
+
 torchvision
+
 mlflow
 
 Later if justified:
 
 celery
+
 redis
+
 gunicorn
 
 Avoid running pip freeze into the project too early because the environment can contain unrelated packages.
@@ -619,19 +729,29 @@ DEBUG=True
 SECRET_KEY=change-this-development-secret-key
 
 DB_NAME=sentinel
+
 DB_USER=sentinel_user
+
 DB_PASSWORD=admin
+
 DB_HOST=localhost
+
 DB_PORT=5432
 
 .env.example should contain placeholders, not real credentials:
 
 DEBUG=True
+
 SECRET_KEY=
+
 DB_NAME=sentinel
+
 DB_USER=
+
 DB_PASSWORD=
+
 DB_HOST=localhost
+
 DB_PORT=5432
 
 Never commit .env.
@@ -641,7 +761,9 @@ Never commit .env.
 At the top of config/settings.py:
 
 from pathlib import Path
+
 import os
+
 from dotenv import load_dotenv
 
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -651,14 +773,23 @@ load_dotenv(BASE_DIR / ".env")
 Database:
 
 DATABASES = {
-    "default": {
-        "ENGINE": "django.db.backends.postgresql",
-        "NAME": os.getenv("DB_NAME"),
-        "USER": os.getenv("DB_USER"),
-        "PASSWORD": os.getenv("DB_PASSWORD"),
-        "HOST": os.getenv("DB_HOST"),
-        "PORT": os.getenv("DB_PORT"),
-    }
+
+    "default": {
+
+        "ENGINE": "django.db.backends.postgresql",
+
+        "NAME": os.getenv("DB_NAME"),
+
+        "USER": os.getenv("DB_USER"),
+
+        "PASSWORD": os.getenv("DB_PASSWORD"),
+
+        "HOST": os.getenv("DB_HOST"),
+
+        "PORT": os.getenv("DB_PORT"),
+
+    }
+
 }
 
 17. PostgreSQL Setup — Actual Process
@@ -671,7 +802,7 @@ Get-Service *postgres*
 
 Result:
 
-Running  postgresql-x64-16
+Running  postgresql-x64-16
 
 Initially:
 
@@ -731,6 +862,8 @@ Reset unfinished SQL input:
 
 
 
+
+
 Exit:
 
 \q
@@ -740,8 +873,11 @@ Exit:
 Existing databases included:
 
 postgres
+
 retail_customer_behavior
+
 datawarehouse
+
 sentinel
 
 But sentinel_user did not exist.
@@ -803,20 +939,31 @@ python manage.py migrate
 Django successfully applied:
 
 contenttypes
+
 auth
+
 admin
+
 sessions
 
 This verified:
 
 Django
- ↓
+
+ ↓
+
 psycopg
- ↓
+
+ ↓
+
 PostgreSQL 16
- ↓
+
+ ↓
+
 sentinel database
- ↓
+
+ ↓
+
 sentinel_user
 
 21. Docker Decision
@@ -846,8 +993,11 @@ GET /api/core/health/
 Expected:
 
 {
-  "status": "ok",
-  "service": "sentinel"
+
+  "status": "ok",
+
+  "service": "sentinel"
+
 }
 
 Example view:
@@ -855,18 +1005,25 @@ Example view:
 from django.http import JsonResponse
 
 def health_check(request):
-    return JsonResponse({
-        "status": "ok",
-        "service": "sentinel"
-    })
+
+    return JsonResponse({
+
+        "status": "ok",
+
+        "service": "sentinel"
+
+    })
 
 Example app URL:
 
 from django.urls import path
+
 from .views import health_check
 
 urlpatterns = [
-    path("health/", health_check, name="health-check"),
+
+    path("health/", health_check, name="health-check"),
+
 ]
 
 Project URL:
@@ -901,10 +1058,13 @@ from django.test import TestCase
 
 class HealthCheckTest(TestCase):
 
-    def test_health_check(self):
-        response = self.client.get("/api/core/health/")
-        self.assertEqual(response.status_code, 200)
-        self.assertEqual(response.json()["status"], "ok")
+    def test_health_check(self):
+
+        response = self.client.get("/api/core/health/")
+
+        self.assertEqual(response.status_code, 200)
+
+        self.assertEqual(response.json()["status"], "ok")
 
 Run:
 
@@ -991,9 +1151,13 @@ Get-ChildItem "C:\Program Files\PostgreSQL" -Recurse -Filter psql.exe -ErrorActi
 Branch model:
 
 main
- ↑
+
+ ↑
+
 develop
- ↑
+
+ ↑
+
 issue / feature branches
 
 main
@@ -1019,17 +1183,29 @@ Current branch:
 Correct flow:
 
 Issue Branch
-     ↓
+
+     ↓
+
 git push
-     ↓
+
+     ↓
+
 GitHub Branch
-     ↓
+
+     ↓
+
 Pull Request
-     ↓
+
+     ↓
+
 develop
-     ↓
+
+     ↓
+
 Release Pull Request
-     ↓
+
+     ↓
+
 main
 
 Never send an issue branch directly into main.
@@ -1071,6 +1247,7 @@ git add -A
 Review:
 
 git status
+
 git diff --cached
 
 Commit:
@@ -1100,16 +1277,23 @@ Use small logical commits.
 Examples:
 
 chore: simplify dependency management
+
 chore: configure Django application
+
 feat: add health endpoint
+
 feat: add dashboard foundation
+
 test: add health endpoint test
 
 Avoid:
 
 final project
+
 everything
+
 changes
+
 update
 
 A commit should describe one logical change.
@@ -1133,18 +1317,27 @@ Suggested description:
 ## Summary
 
 - Configured Django environment variables
+
 - Configured PostgreSQL
+
 - Configured Django REST Framework
+
 - Added Django template and static file support
+
 - Added application health endpoint
+
 - Added initial dashboard
+
 - Added basic automated tests
+
 - Simplified dependency management to a single requirements.txt
 
 ## Validation
 
 - `python manage.py check`
+
 - `python manage.py test`
+
 - `python manage.py migrate`
 
 Closes #1
@@ -1152,8 +1345,11 @@ Closes #1
 After merging:
 
 git checkout develop
+
 git pull origin develop
+
 git branch -d 1-project-initialization-and-django-setup
+
 git push origin --delete 1-project-initialization-and-django-setup
 
 31. Issue Roadmap
@@ -1343,51 +1539,86 @@ deployment
 For software issues:
 
 [ ] Requirement understood
+
 [ ] Design decided
+
 [ ] Implementation complete
+
 [ ] Tests added
+
 [ ] Local verification complete
+
 [ ] Documentation updated
+
 [ ] Git diff reviewed
+
 [ ] Commit created
+
 [ ] Branch pushed
+
 [ ] Pull Request created
+
 [ ] PR reviewed
+
 [ ] PR merged into develop
+
 [ ] Issue closed
 
 For ML issues:
 
 [ ] Dataset assumptions documented
+
 [ ] Leakage checked
+
 [ ] Baseline established
+
 [ ] Metrics selected
+
 [ ] Experiment reproducible
+
 [ ] Error analysis completed
+
 [ ] Model artifact/version recorded
 
 33. Current Project State
 
 At the latest verified point:
 
-GitHub repository          ✅
-main                       ✅
-develop                    ✅
-Issue branch               ✅
-Django project             ✅
-Virtual environment        ✅
-PostgreSQL 16              ✅
-sentinel database          ✅
-sentinel_user              ✅
-.env configuration         ✅
-python manage.py check     ✅
-python manage.py migrate   ✅
-single requirements.txt    ⏳ finalize/commit
-health endpoint            ⏳
-dashboard                  ⏳
-automated test             ⏳
-push issue branch          ⏳
-PR → develop               ⏳
+GitHub repository          ✅
+
+main                       ✅
+
+develop                    ✅
+
+Issue branch               ✅
+
+Django project             ✅
+
+Virtual environment        ✅
+
+PostgreSQL 16              ✅
+
+sentinel database          ✅
+
+sentinel_user              ✅
+
+.env configuration         ✅
+
+python manage.py check     ✅
+
+python manage.py migrate   ✅
+
+single requirements.txt    ⏳ finalize/commit
+
+health endpoint            ⏳
+
+dashboard                  ⏳
+
+automated test             ⏳
+
+push issue branch          ⏳
+
+PR → develop               ⏳
 
 PostgreSQL + Django connectivity has already been verified successfully by migrations.
 
@@ -1396,24 +1627,43 @@ PostgreSQL + Django connectivity has already been verified successfully by migra
 Finish Issue #1 in this order:
 
 1. Finalize requirements.txt
+
 2. Review config/settings.py
+
 3. Configure DRF
+
 4. Add health endpoint
+
 5. Add dashboard
+
 6. Add static CSS
+
 7. Add health test
+
 8. Run:
-       python manage.py check
-       python manage.py test
-       python manage.py migrate
+
+       python manage.py check
+
+       python manage.py test
+
+       python manage.py migrate
+
 9. Review:
-       git status
-       git diff
+
+       git status
+
+       git diff
+
 10. Commit logical changes
+
 11. Push issue branch
+
 12. Create PR → develop
+
 13. Merge
+
 14. Close Issue #1
+
 15. Start Issue #2
 
 35. Reusable New-Project Checklist
@@ -1421,83 +1671,133 @@ Finish Issue #1 in this order:
 Business
 
 [ ] What business problem are we solving?
+
 [ ] Who is the user?
+
 [ ] What decision does the system improve?
+
 [ ] What is the measurable outcome?
+
 [ ] Functional requirements?
+
 [ ] Non-functional requirements?
 
 Scope
 
 [ ] Define MVP
+
 [ ] Define out-of-scope items
+
 [ ] Convert future work into issues
 
 Architecture
 
 [ ] Define components
+
 [ ] Define data flow
+
 [ ] Choose database
+
 [ ] Define APIs
+
 [ ] Define ML components
+
 [ ] Avoid unnecessary infrastructure
 
 Repository
 
 [ ] GitHub repository
+
 [ ] README
+
 [ ] .gitignore
+
 [ ] .env.example
+
 [ ] virtual environment
+
 [ ] dependency file
+
 [ ] project structure
 
 Git
 
 [ ] main
+
 [ ] develop
+
 [ ] Issues
+
 [ ] issue branches
+
 [ ] logical commits
+
 [ ] push
+
 [ ] PR → develop
+
 [ ] merge
+
 [ ] release → main
 
 Backend
 
 [ ] Environment configuration
+
 [ ] Database
+
 [ ] Framework configuration
+
 [ ] Health endpoint
+
 [ ] Tests
+
 [ ] check
+
 [ ] migrations
+
 [ ] test suite
 
 ML
 
 [ ] Understand data
+
 [ ] Validate data
+
 [ ] Investigate leakage
+
 [ ] Design split
+
 [ ] Establish baseline
+
 [ ] Feature engineering
+
 [ ] Evaluate
+
 [ ] Deep learning
+
 [ ] Compare models
+
 [ ] Error analysis
+
 [ ] Explainability
 
 Productionization
 
 [ ] Inference API
+
 [ ] Persistence
+
 [ ] Model versioning
+
 [ ] Experiment tracking
+
 [ ] Logging/monitoring
+
 [ ] Docker
+
 [ ] CI/CD
+
 [ ] Deployment
 
 36. Golden Rules
@@ -1543,33 +1843,47 @@ Finish one issue properly before starting the next.
 Python
 
 python --version
+
 python -m venv .venv
+
 .\.venv\Scripts\Activate.ps1
+
 pip install -r requirements.txt
 
 Django
 
 python manage.py check
+
 python manage.py makemigrations
+
 python manage.py migrate
+
 python manage.py test
+
 python manage.py runserver
 
 PostgreSQL
 
 Get-Service *postgres*
+
 Get-ChildItem "C:\Program Files\PostgreSQL" -Recurse -Filter psql.exe -ErrorAction SilentlyContinue
+
 & "C:\Program Files\PostgreSQLin\psql.exe" --version
+
 & "C:\Program Files\PostgreSQLin\psql.exe" -U postgres
 
 Inside psql:
 
 \l
+
 \du
+
 \c sentinel
 
 SELECT datname FROM pg_database;
+
 SELECT rolname FROM pg_roles;
+
 \q
 
 VS Code
@@ -1579,16 +1893,27 @@ code .
 Git
 
 git status
+
 git branch -vv
+
 git log --oneline --decorate --graph --all
+
 git fetch origin
+
 git pull origin develop
+
 git checkout develop
+
 git checkout -b feature/<issue-number>-<description>
+
 git add -A
+
 git status
+
 git diff --cached
+
 git commit -m "type: description"
+
 git push -u origin <branch-name>
 
 38. Engineering Mindset
@@ -1596,37 +1921,65 @@ git push -u origin <branch-name>
 Build SENTINEL as a product, not as a collection of technologies:
 
 Business Requirement
-        ↓
+
+        ↓
+
 MVP Scope
-        ↓
+
+        ↓
+
 Issue
-        ↓
+
+        ↓
+
 Design
-        ↓
+
+        ↓
+
 Implementation
-        ↓
+
+        ↓
+
 Test
-        ↓
+
+        ↓
+
 Experiment / Evidence
-        ↓
+
+        ↓
+
 Pull Request
-        ↓
+
+        ↓
+
 develop
-        ↓
+
+        ↓
+
 Release
-        ↓
+
+        ↓
+
 main
 
 Avoid:
 
 Technology
-   ↓
+
+   ↓
+
 Random code
-   ↓
+
+   ↓
+
 Huge repository
-   ↓
+
+   ↓
+
 No tests
-   ↓
+
+   ↓
+
 Fake metrics
 
 The goal is to demonstrate engineering judgment, reproducibility, clean development workflow, and evidence-based ML decisions.
